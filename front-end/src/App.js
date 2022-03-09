@@ -12,6 +12,9 @@ function App() {
       <Route path="/">
         <Layout />
       </Route>
+      <Route>
+        <ReservationForm />
+      </Route>
     </Switch>
   );
 }
