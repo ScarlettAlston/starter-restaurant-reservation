@@ -1,6 +1,7 @@
-import React, { useState, useEffect} from "react";
+import React, { useState } from "react";
 import {useHistory} from "react-router-dom";
 import { ReservationForm } from "./ReservationForm";
+import { createReservation } from "../utils/api";
 
 const CreateReservation = () => {
   const [newReservation, setNewReservation] = useState({
@@ -17,7 +18,7 @@ const CreateReservation = () => {
     if (button === "cancel") {
       history.goBack();
     } else {
-      await CreateReservation(newReservation).then(() => {
+      await createReservation(newReservation).then(() => {
         const destination = `/dashboard?date-${newReservation.reservation_date}`
         history.push(destination)
       })

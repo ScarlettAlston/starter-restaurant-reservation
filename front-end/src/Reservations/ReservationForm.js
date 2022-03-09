@@ -1,6 +1,6 @@
 import React from "react";
 
-const ReservationForm = ({ newRestaurant, setNewRestaurant }) => {
+export const ReservationForm = ({ newRestaurant, setNewRestaurant }) => {
   function handleChange({ target }) {
     setNewRestaurant({...newRestaurant, [target.name]: target.value });
   }
@@ -30,4 +30,3 @@ const ReservationForm = ({ newRestaurant, setNewRestaurant }) => {
 
 }
 
-export default ReservationForm;
