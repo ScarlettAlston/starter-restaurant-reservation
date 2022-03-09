@@ -9,7 +9,7 @@ async function list(req, res) {
 }
 
 async function create(req, res) {
-  res.json({data: await service.create(req.body.data)})
+  res.status(201).json({data: await service.create(req.body.data)})
 }
 
 module.exports = {
