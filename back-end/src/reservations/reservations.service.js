@@ -8,3 +8,8 @@ function list(){
 function create(newReservation) {
   return knex(tableName).insert(newReservation).then((newRecord)=>newRecord[0])
 }
+
+module.exports = {
+  list,
+  create
+}
