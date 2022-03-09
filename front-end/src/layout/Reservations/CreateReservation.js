@@ -1,8 +1,9 @@
 import React, { useState, useEffect} from "react";
-import { ReservationForm } from "./ReservationForm"
+import {useHistory} from "react-router-dom";
+import { ReservationForm } from "./ReservationForm";
 
 const CreateReservation = () => {
-  const [formData, setFormData] = useState({
+  const [newReservation, setNewReservation] = useState({
     first_name: "",
     last_name: "",
     mobile_number: "",
@@ -10,11 +11,23 @@ const CreateReservation = () => {
     reservation_date: "",
     reservation_time: "",
   });
+  const history = useHistory();
+
+  async function handleSubmit(button) {
+    if (button === "cancel") {
+      history.goBack();
+    } else {
+      await CreateReservation(newReservation).then(() => {
+        const destination = `/dashboard?date-${newReservation.reservation_date}`
+        history.push(destination)
+      })
+    }
+  }
 
   return (
     <div>
         <h2>Create Reservation</h2>
-        <ReservationForm formData={formData} setFormData={setFormData} />
+        <ReservationForm formData={newReservation} setFormData={setNewReservation} />
         <button
                 type="button"
                 className="btn btn-secondary mr-2"
