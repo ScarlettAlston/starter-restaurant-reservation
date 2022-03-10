@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Redirect, Route, Switch } from "react-router-dom";
 import Dashboard from "../dashboard/Dashboard";
 import NotFound from "./NotFound";
@@ -19,6 +18,9 @@ function Routes() {
       <Route exact={true} path="/">
         <Redirect to={"/dashboard"} />
       </Route>
+      <Route exact={true} path="/reservations/new">
+        <CreateReservation />
+      </Route>
       <Route exact={true} path="/reservations">
         <Redirect to={"/dashboard"} />
       </Route>
@@ -27,9 +29,6 @@ function Routes() {
       </Route>
       <Route>
         <NotFound />
-      </Route>
-      <Route exact={true} path="/reservations/new">
-        <CreateReservation />
       </Route>
     </Switch>
   );

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { ReservationForm } from "./ReservationForm";
 import { createReservation } from "../utils/api";
 
 const CreateReservation = () => {
-  const [newReservation, setNewReservation] = useState({
+  const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
     mobile_number: "",
@@ -14,28 +14,39 @@ const CreateReservation = () => {
   });
   const history = useHistory();
 
-  async function handleSubmit(button) {
-    if (button === "cancel") {
-      history.goBack();
-    } else {
-      await createReservation(newReservation).then(() => {
-        const destination = `/dashboard?date-${newReservation.reservation_date}`
-        history.push(destination)
-      })
-    }
+  async function handleSubmit(event) {
+    event.preventDefault();
+    await createReservation(formData).then(() => {
+      const destination = `/dashboard?date=${formData.reservation_date}`;
+      history.push(destination);
+    });
+  }
+
+  function handleCancel() {
+    history.goBack();
   }
 
   return (
     <div>
-        <h2>Create Reservation</h2>
-        <ReservationForm formData={newReservation} setFormData={setNewReservation} />
-        <button
-                type="button"
-                className="btn btn-secondary mr-2"
-                name="cancel"
-                onClick={(event) => handleSubmit("done")}>
-                Cancel
-            </button>
+      <h2>Create Reservation</h2>
+      <ReservationForm formData={formData} setFormData={setFormData} />
+      <button
+        type="button"
+        className="btn btn-secondary mr-2"
+        name="cancel"
+        onClick={(event) => handleCancel()}
+      >
+        Cancel
+      </button>
+
+      <button
+        type="submit"
+        className="btn btn-primary mr-2"
+        name="submit"
+        onClick={(event) => handleSubmit(event)}
+      >
+        Submit
+      </button>
     </div>
   );
 };
