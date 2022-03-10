@@ -1,12 +1,15 @@
 const knex = require("../db/connection");
 const tableName = "reservations";
 
-function list() {
-  return knex(tableName).select("*");
+function list(date) {
+  return knex(tableName)
+    .select("*")
+    .where({ reservation_date: date })
+    .orderBy("reservation_time");
 }
 
 function create(newReservation) {
-  console.log(newReservation)
+  console.log(newReservation);
   return knex(tableName)
     .insert(newReservation)
     .returning("*")
@@ -15,5 +18,5 @@ function create(newReservation) {
 
 module.exports = {
   list,
-  create
+  create,
 };
