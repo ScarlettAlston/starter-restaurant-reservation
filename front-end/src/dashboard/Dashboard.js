@@ -31,18 +31,24 @@ function Dashboard() {
   return (
     <main>
       <h1>Dashboard</h1>
-      <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for date</h4>
+      <div className="d-md-flex flex-column">
+        <h4>Reservations for date</h4>
+        <div className="btn-group my-1 justify-content-between">
+          <Link to={`/dashboard?date=${previousDate}`}>
+            <button type="button" className="mx-1 btn btn-outline-secondary">
+              Prev
+            </button>
+          </Link>
+          <Link to={"/dashboard"}>
+            <button className="mx-1 btn btn-primary">Today</button>
+          </Link>
+          <Link to={`/dashboard?date=${nextDate}`}>
+            <button type="button" className="mx-1 btn btn-outline-secondary">
+              Next
+            </button>{" "}
+          </Link>
+        </div>
       </div>
-      <button type="button" class="btn btn-outline-secondary">
-        <Link to={"/dashboard?date=previousDate"}> Previous</Link>
-      </button>
-      <button className="btn btn-primary">
-        <Link to={"/dashboard"}> Today</Link>
-      </button>
-      <button type="button" class="btn btn-outline-secondary">
-        <Link to={"/dashboard?date=nextDate"}> Next</Link>
-      </button>
       <div>
         <table className="table table-striped">
           <thead>
