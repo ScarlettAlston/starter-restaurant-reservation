@@ -2,9 +2,6 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const service = require("./reservations.service");
 const hasProperties = require("../errors/hasProperties");
 
-/**
- * List handler for reservation resources
- */
 async function list(req, res) {
   const { date } = req.query;
   res.json({ data: await service.list(date) });
