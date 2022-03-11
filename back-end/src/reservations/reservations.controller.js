@@ -12,7 +12,6 @@ async function list(req, res) {
 
 async function create(req, res) {
   const data = await service.create(req.body.data);
-  console.log("CONTROLLER" + data);
   res.status(201).json({ data });
 }
 
