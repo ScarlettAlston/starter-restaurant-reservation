@@ -35,11 +35,13 @@ function Dashboard() {
         <h4 className="mb-0">Reservations for date</h4>
       </div>
       <button type="button" class="btn btn-outline-secondary">
-        Previous
+        <Link to={"/dashboard?date=previousDate"}> Previous</Link>
       </button>
-      <button className="btn btn-primary">Today</button>
+      <button className="btn btn-primary">
+        <Link to={"/dashboard"}> Today</Link>
+      </button>
       <button type="button" class="btn btn-outline-secondary">
-        Next
+        <Link to={"/dashboard?date=nextDate"}> Next</Link>
       </button>
       <div>
         <table className="table table-striped">
