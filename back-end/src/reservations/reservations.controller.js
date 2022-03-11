@@ -1,5 +1,6 @@
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const service = require("./reservations.service");
+const hasProperties = require("../errors/hasProperties");
 
 /**
  * List handler for reservation resources
@@ -17,5 +18,15 @@ async function create(req, res) {
 
 module.exports = {
   list,
-  create: asyncErrorBoundary(create),
+  create: [
+    hasProperties(
+      "first_name",
+      "last_name",
+      "mobile_number",
+      "reservation_date",
+      "reservation_time",
+      "people"
+    ),
+    asyncErrorBoundary(create),
+  ],
 };
