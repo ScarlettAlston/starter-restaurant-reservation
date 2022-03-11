@@ -12,14 +12,19 @@ const CreateReservation = () => {
     reservation_date: "",
     reservation_time: "",
   });
+  const [errorMessage, setErrorMessage] = useState("");
   const history = useHistory();
 
   async function handleSubmit(event) {
     event.preventDefault();
-    await createReservation(formData).then(() => {
-      const destination = `/dashboard?date=${formData.reservation_date}`;
-      history.push(destination);
-    });
+    try {
+      await createReservation(formData).then(() => {
+        const destination = `/dashboard?date=${formData.reservation_date}`;
+        history.push(destination);
+      });
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
   }
 
   function handleCancel() {
@@ -29,6 +34,9 @@ const CreateReservation = () => {
   return (
     <div>
       <h2>Create Reservation</h2>
+      {errorMessage && (
+        <h5 className="alert alert-danger mx-1">{errorMessage}</h5>
+      )}
       <ReservationForm formData={formData} setFormData={setFormData} />
       <button
         type="button"
