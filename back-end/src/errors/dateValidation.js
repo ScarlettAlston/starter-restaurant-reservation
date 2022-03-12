@@ -18,10 +18,8 @@ function isDate() {
 
 function isFuture() {
   return function (req, res, next) {
-    const submitDate = new Date(req.body.data.reservation_date);
-    const todaysDate = new Date();
     try {
-      if (submitDate >= todaysDate) {
+      if (res.locals.submitDate >= res.locals.todaysDate) {
         next();
       } else {
         const error = new Error(
@@ -72,7 +70,7 @@ function validateTime() {
 function isTuesday() {
   return function (req, res, next) {
     try {
-      if (new Date(req.body.data.reservation_date).getDay() != 1) {
+      if (res.locals.submitDate.getDay() != 2) {
         next();
       } else {
         const error = new Error("Sorry! We're closed that day.");
@@ -85,9 +83,32 @@ function isTuesday() {
   };
 }
 
-function reservationBeforeClose() {}
+function resTimeValid() {
+  return function (req, res, next) {
+    try {
+      if () {
+
+      } else {
+        const error = new Error("Sorry! We cannot create a reservation at this time.");
+        error.status = 400;
+        throw error;
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+}
+
+function dateObjects() {
+  return function (req, res, next) {
+    res.locals.submitDate = new Date(req.body.data.reservation_date + " " + req.body.data.reservation_time);
+    res.locals.todaysDate = new Date();
+    next();
+  };
+}
 
 module.exports = {
+  dateObjects,
   isDate,
   isFuture,
   isNumber,

@@ -4,6 +4,7 @@ const hasProperties = require("../errors/hasProperties");
 const {
   isDate,
   validateTime,
+  dateObjects,
   isNumber,
   isTuesday,
   isFuture,
@@ -32,6 +33,7 @@ module.exports = {
     ),
     isDate(),
     validateTime(),
+    dateObjects(),
     isNumber(),
     isTuesday(),
     isFuture(),
