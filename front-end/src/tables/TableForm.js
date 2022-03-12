@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const TableForm = (formData, setFormData) => {
+export const TableForm = ({ formData, setFormData }) => {
   function handleChange({ target }) {
     setFormData({ ...formData, [target.name]: target.value });
   }
