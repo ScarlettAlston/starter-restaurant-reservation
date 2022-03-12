@@ -63,6 +63,17 @@ export async function createReservation(reservation, signal) {
   return await fetchJson(url, options, {});
 }
 
+
+export async function createTable(table, signal) {
+  const url = `${API_BASE_URL}/tables`;
+  const options = {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ data: table }),
+    signal,
+  };
+  return await fetchJson(url, options, {});
+}
 /**
  * Retrieves all existing reservation.
  * @returns {Promise<[reservation]>}
