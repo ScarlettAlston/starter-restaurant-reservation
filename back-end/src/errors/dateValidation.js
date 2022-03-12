@@ -39,7 +39,7 @@ function isFuture() {
 function isNumber() {
   return function (req, res, next) {
     try {
-      if (typeof Number(req.body.data.people) === "number") {
+      if (typeof req.body.data.people === "number") {
         next();
       } else {
         const error = new Error(`Field: "people" is not a valid number`);
@@ -84,6 +84,8 @@ function isTuesday() {
     }
   };
 }
+
+function reservationBeforeClose() {}
 
 module.exports = {
   isDate,
