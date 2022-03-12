@@ -4,6 +4,7 @@ const hasProperties = require("../errors/hasProperties");
 const {
   isDate,
   validateTime,
+  resTimeValid,
   dateObjects,
   isNumber,
   isTuesday,
@@ -37,6 +38,7 @@ module.exports = {
     isNumber(),
     isTuesday(),
     isFuture(),
+    resTimeValid(),
     asyncErrorBoundary(create),
   ],
 };

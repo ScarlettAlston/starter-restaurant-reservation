@@ -40,7 +40,7 @@ function isNumber() {
       if (typeof req.body.data.people === "number") {
         next();
       } else {
-        const error = new Error(`Field: "people" is not a valid number`);
+        const error = new Error(`Field: "people" or "party size" is not valid`);
         error.status = 400;
         throw error;
       }
@@ -86,8 +86,9 @@ function isTuesday() {
 function resTimeValid() {
   return function (req, res, next) {
     try {
-      if () {
 
+      if (req.body.data.reservation_time >= "10:30" && req.body.data.reservation_time <= "21:30") {
+        next()
       } else {
         const error = new Error("Sorry! We cannot create a reservation at this time.");
         error.status = 400;
@@ -108,6 +109,7 @@ function dateObjects() {
 }
 
 module.exports = {
+  resTimeValid,
   dateObjects,
   isDate,
   isFuture,

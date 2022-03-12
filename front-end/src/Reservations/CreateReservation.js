@@ -16,9 +16,10 @@ const CreateReservation = () => {
   const history = useHistory();
 
   async function handleSubmit(event) {
-    event.preventDefault();
     try {
-      await createReservation(formData).then(() => {
+      event.preventDefault();
+      const parsedData = { ...formData, people: Number(formData.people) }
+      await createReservation(parsedData).then(() => {
         const destination = `/dashboard?date=${formData.reservation_date}`;
         history.push(destination);
       });
