@@ -36,6 +36,22 @@ function isFuture() {
   };
 }
 
+function isNumber() {
+  return function (req, res, next) {
+    try {
+      if (typeof Number(req.body.data.people) === "number") {
+        next();
+      } else {
+        const error = new Error(`Field: "people" is not a valid number`);
+        error.status = 400;
+        throw error;
+      }
+    } catch (error) {
+      next(error);
+    }
+  };
+}
+
 function validateTime() {
   return function (req, res, next) {
     const isValid = /[0-9]{2}:[0-9]{2}/.test(req.body.data.reservation_time);
@@ -43,7 +59,7 @@ function validateTime() {
       if (isValid) {
         next();
       } else {
-        const error = new Error("Input time is not valid");
+        const error = new Error("The reservation_time is not valid");
         error.status = 400;
         throw error;
       }
@@ -56,7 +72,7 @@ function validateTime() {
 function isTuesday() {
   return function (req, res, next) {
     try {
-      if (Date.getDay(req.body.data.reservation_date) != 1) {
+      if (new Date(req.body.data.reservation_date).getDay() != 1) {
         next();
       } else {
         const error = new Error("Sorry! We're closed that day.");
@@ -69,4 +85,10 @@ function isTuesday() {
   };
 }
 
-export default dateValidation;
+module.exports = {
+  isDate,
+  isFuture,
+  isNumber,
+  validateTime,
+  isTuesday,
+};

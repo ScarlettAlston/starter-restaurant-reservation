@@ -9,7 +9,6 @@ function list(date) {
 }
 
 function create(newReservation) {
-  console.log(newReservation);
   return knex(tableName)
     .insert(newReservation)
     .returning("*")

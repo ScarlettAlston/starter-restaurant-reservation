@@ -1,6 +1,13 @@
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const service = require("./reservations.service");
 const hasProperties = require("../errors/hasProperties");
+const {
+  isDate,
+  validateTime,
+  isNumber,
+  isTuesday,
+  isFuture,
+} = require("../errors/dateValidation");
 
 async function list(req, res) {
   const { date } = req.query;
@@ -23,6 +30,11 @@ module.exports = {
       "reservation_time",
       "people"
     ),
+    isDate(),
+    validateTime(),
+    isNumber(),
+    isTuesday(),
+    isFuture(),
     asyncErrorBoundary(create),
   ],
 };
