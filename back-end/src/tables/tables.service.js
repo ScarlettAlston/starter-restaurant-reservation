@@ -12,3 +12,8 @@ function create(newTable) {
     .returning("*")
     .then((newRecord) => newRecord[0])
 }
+
+module.exports = {
+  list,
+  create
+}
