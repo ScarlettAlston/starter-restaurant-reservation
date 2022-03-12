@@ -11,6 +11,14 @@ export const CreateTable = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const history = useHistory();
 
+  async function handleSubmit(event) {
+    try {
+      event.preventDefault();
+      await 
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+  }
 
 
   return (
