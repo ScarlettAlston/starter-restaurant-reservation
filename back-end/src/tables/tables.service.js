@@ -3,7 +3,7 @@ const tableName = "tables";
 
 function list() {
   return knex(tableName)
-    .selectt("*")
+    .select("*")
 }
 
 function create(newTable) {
