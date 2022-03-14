@@ -17,6 +17,7 @@ function Dashboard() {
   const previousDate = previous(date);
   const nextDate = next(date);
 
+
   useEffect(() => loadDashboard(date), [date]);
 
   function loadDashboard(date) {
@@ -57,6 +58,7 @@ function Dashboard() {
               <th scope="col">Name</th>
               <th scope="col">Party Size</th>
               <th scope="col">Mobile Number</th>
+              <th scope="col">Seat Party</th>
             </tr>
           </thead>
           <tbody>
@@ -69,10 +71,22 @@ function Dashboard() {
                   </td>
                   <td>{reservation.people}</td>
                   <td>{reservation.mobile_number}</td>
+                  <td>
+                    <Link to={`/reservations/${reservation.reservation_id}/seat`}>
+                      <button type="button" className="mx-1 btn btn-outline-secondary">
+                        Seat
+                      </button>{" "}
+                    </Link>
+                  </td>
                 </tr>
               );
             })}
           </tbody>
+        </table>
+      </div>
+      <div>
+        <table className="table table-striped">
+
         </table>
       </div>
       <ErrorAlert error={reservationsError} />
