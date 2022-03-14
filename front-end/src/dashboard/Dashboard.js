@@ -92,8 +92,11 @@ function Dashboard() {
       <div>
         <table className="table table-striped">
           <thead>
-            <th>Table Name</th>
-            <th>Capacity</th>
+            <tr>
+              <th scope="col">Table Name</th>
+              <th scope="col">Capacity</th>
+              <th scope="col">Availability</th>
+            </tr>
           </thead>
           <tbody>
             {tables.map((table) => {
