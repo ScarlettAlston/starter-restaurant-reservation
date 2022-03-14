@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { listReservations } from "../utils/api";
+import { listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { today, previous, next } from "../utils/date-time";
 import { Link, useLocation } from "react-router-dom";
 
 function Dashboard() {
   const [reservations, setReservations] = useState([]);
-  const [reservationsError, setReservationsError] = useState(null);
+  const [tables, setTables] = useState([]);
+  const [error, setError] = useState(null);
   const search = useLocation().search;
   const dateParam = new URLSearchParams(search).get("date");
 
@@ -22,10 +24,13 @@ function Dashboard() {
 
   function loadDashboard(date) {
     const abortController = new AbortController();
-    setReservationsError(null);
+    setError(null);
     listReservations({ date }, abortController.signal)
       .then(setReservations)
-      .catch(setReservationsError);
+      .catch(setError);
+    listTables(abortController.signal)
+      .then(setTables)
+      .catch(setError);
     return () => abortController.abort();
   }
 
@@ -86,13 +91,23 @@ function Dashboard() {
       </div>
       <div>
         <table className="table table-striped">
-          <thead>Tables</thead>
-          <tr>
-            <th></th>
-          </tr>
+          <thead>
+            <th>Table Name</th>
+            <th>Capacity</th>
+          </thead>
+          <tbody>
+            {tables.map((table) => {
+              return (
+                <tr key={table.table_id}>
+                  <td>{table.table.name}</td>
+                  <td>{table.capacity}</td>
+                </tr>
+              );
+            })}
+          </tbody>
         </table>
       </div>
-      <ErrorAlert error={reservationsError} />
+      <ErrorAlert error={error} />
     </main>
   );
 }
