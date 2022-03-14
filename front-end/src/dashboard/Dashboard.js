@@ -86,7 +86,10 @@ function Dashboard() {
       </div>
       <div>
         <table className="table table-striped">
-
+          <thead>Tables</thead>
+          <tr>
+            <th></th>
+          </tr>
         </table>
       </div>
       <ErrorAlert error={reservationsError} />
