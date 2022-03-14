@@ -101,11 +101,15 @@ function Dashboard() {
             </tr>
           </thead>
           <tbody>
-            {tables.map((table, index) => {
+            {tables.map((table) => {
               return (
                 <tr key={table.table_id}>
                   <td>{table.table_name}</td>
                   <td>{table.capacity}</td>
+                  {table.reservation_id &&
+                    <td data-table-id-status={table.table_id}>Occupied</td>}
+                  {!table.reservation_id &&
+                    <td data-table-id-status={table.table_id}>Free</td>}
                 </tr>
               );
             })}
