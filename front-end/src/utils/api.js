@@ -91,7 +91,7 @@ export async function listReservations(params, signal) {
 }
 
 export async function listTables(signal) {
+  console.log("API START")
   const url = new URL(`${API_BASE_URL}/tables`);
-
   return await fetchJson(url, { headers, signal }, []);
 }

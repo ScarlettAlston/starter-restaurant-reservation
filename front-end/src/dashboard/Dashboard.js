@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { listReservations } from "../utils/api";
-import { listTables } from "../utils/api";
+import { listReservations, listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { today, previous, next } from "../utils/date-time";
 import { Link, useLocation } from "react-router-dom";
@@ -23,14 +22,17 @@ function Dashboard() {
   useEffect(() => loadDashboard(date), [date]);
 
   function loadDashboard(date) {
+    console.log("LOAD DASHBOARD START")
     const abortController = new AbortController();
     setError(null);
     listReservations({ date }, abortController.signal)
       .then(setReservations)
       .catch(setError);
+    console.log("LIST RESERVATIONS DONE")
     listTables(abortController.signal)
       .then(setTables)
       .catch(setError);
+    console.log("LIST TABLES DONE")
     return () => abortController.abort();
   }
 
@@ -99,10 +101,10 @@ function Dashboard() {
             </tr>
           </thead>
           <tbody>
-            {tables.map((table) => {
+            {tables.map((table, index) => {
               return (
                 <tr key={table.table_id}>
-                  <td>{table.table.name}</td>
+                  <td>{table.table_name}</td>
                   <td>{table.capacity}</td>
                 </tr>
               );
