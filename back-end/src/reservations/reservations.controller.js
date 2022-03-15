@@ -21,8 +21,14 @@ async function create(req, res) {
   res.status(201).json({ data });
 }
 
+async function update(req, res) {
+  const data = await service.update(req.body.data)
+  res.json({ data })
+}
+
 module.exports = {
   list,
+  update,
   create: [
     hasProperties(
       "first_name",

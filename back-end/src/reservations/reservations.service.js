@@ -15,7 +15,15 @@ function create(newReservation) {
     .then((newRecord) => newRecord[0]);
 }
 
+function update(updatedReservation) {
+  return knex(tableName)
+    .select("*")
+    .where({ reservation_id: updatedReservation.reservationId })
+    .update(updatedReservation, "*")
+}
+
 module.exports = {
   list,
+  update,
   create,
 };
