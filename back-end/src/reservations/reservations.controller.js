@@ -9,11 +9,17 @@ const {
   isNumber,
   isTuesday,
   isFuture,
-} = require("../errors/dateValidation");
+} = require("../errors/middleware");
 
 async function list(req, res) {
   const { date } = req.query;
   res.json({ data: await service.list(date) });
+}
+
+async function read(req, res) {
+  const { reservation_id } = req.params
+  const data = await service.read(reservation_id)
+  res.status(200).json({ data })
 }
 
 async function create(req, res) {
@@ -29,6 +35,7 @@ async function update(req, res) {
 module.exports = {
   list,
   update,
+  read,
   create: [
     hasProperties(
       "first_name",
