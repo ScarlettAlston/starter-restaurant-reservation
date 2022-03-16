@@ -2,18 +2,25 @@ const { restart } = require("nodemon");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const service = require("./tables.service");
 const hasProperties = require("../errors/hasProperties");
-const { listTables } = require("../../../front-end/src/utils/api");
+const { listTables, updateTables } = require("../../../front-end/src/utils/api");
 const { table } = require("../db/connection");
 
 function tableCapacity() {
   return function (req, res, next) {
     try {
-      if (res.locals.table.reservation_id === null) {
+      const table = req.body.data
+      if (table.reservation_id === null) {
+        next()
+      }
+      res.locals.reservation = await service.getReservation(table.reservation_id);
+      if (table.capacity >= res.locals.reservation.people) {
         next()
       } else {
-        res.locals.reservation = await getReservation(
-          res.locals.table.reservation_id
-        )
+        const table = table.table_name;
+        const tableCapacity = table.capacity
+        const error = new Error(`Table ${tableName} has capacity of ${tableCapacity}. Please choose another table.`)
+        error.status = 400;
+        throw error;
       }
     } catch (error) {
       next(error)
