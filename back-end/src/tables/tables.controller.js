@@ -1,32 +1,10 @@
-const { restart } = require("nodemon");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const service = require("./tables.service");
 const hasProperties = require("../errors/hasProperties");
-const { listTables, updateTables } = require("../../../front-end/src/utils/api");
-const { table } = require("../db/connection");
-
-function tableCapacity() {
-  return function (req, res, next) {
-    try {
-      const table = req.body.data
-      if (table.reservation_id === null) {
-        next()
-      }
-      res.locals.reservation = await service.getReservation(table.reservation_id);
-      if (table.capacity >= res.locals.reservation.people) {
-        next()
-      } else {
-        const table = table.table_name;
-        const tableCapacity = table.capacity
-        const error = new Error(`Table ${tableName} has capacity of ${tableCapacity}. Please choose another table.`)
-        error.status = 400;
-        throw error;
-      }
-    } catch (error) {
-      next(error)
-    }
-  }
-}
+const {
+  tableOccupied,
+  tableCapacity
+} = require("../middleware/tablesMiddleware")
 
 async function list(req, res) {
   const data = await service.list()
@@ -47,7 +25,13 @@ async function update(req, res) {
 module.exports = {
   list: [asyncErrorBoundary(list)],
   create: [
+    hasProperties("table_name", "capacity"),
+    tableOccupied(),
+    tableCapacity(),
     asyncErrorBoundary(create)
   ],
-  update: [asyncErrorBoundary(update)]
+  update: [
+    hasProperties("table_name", "capacity", "reservation_id"),
+    asyncErrorBoundary(update)
+  ]
 }

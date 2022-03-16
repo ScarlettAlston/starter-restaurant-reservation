@@ -9,7 +9,7 @@ const {
   isNumber,
   isTuesday,
   isFuture,
-} = require("../../middleware/reservationsMiddleware");
+} = require("../middleware/reservationsMiddleware");
 
 async function list(req, res) {
   const { date } = req.query;

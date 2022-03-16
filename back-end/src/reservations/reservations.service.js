@@ -31,7 +31,7 @@ function update(updatedReservation) {
 
 module.exports = {
   list,
-  read,
+  getReservation,
   update,
   create,
 };
