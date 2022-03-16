@@ -15,7 +15,15 @@ function create(newTable) {
     .then((newRecord) => newRecord[0])
 }
 
+function update(updatedTable) {
+  return knex(tableName)
+    .select("*")
+    .where({ table_id: updatedTable.table_id })
+    .update(updatedTable, "*")
+}
+
 module.exports = {
   list,
-  create
+  create,
+  update
 }

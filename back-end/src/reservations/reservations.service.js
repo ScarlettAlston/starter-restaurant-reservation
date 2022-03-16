@@ -8,6 +8,13 @@ function list(date) {
     .orderBy("reservation_time");
 }
 
+function read(reservation_id) {
+  return knex(tableName)
+    .select("*")
+    .where({ reservation_id })
+    .first()
+}
+
 function create(newReservation) {
   return knex(tableName)
     .insert(newReservation)
@@ -18,12 +25,13 @@ function create(newReservation) {
 function update(updatedReservation) {
   return knex(tableName)
     .select("*")
-    .where({ reservation_id: updatedReservation.reservationId })
+    .where({ reservation_id: updatedReservation.reservation_id })
     .update(updatedReservation, "*")
 }
 
 module.exports = {
   list,
+  read,
   update,
   create,
 };
