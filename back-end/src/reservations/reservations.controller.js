@@ -9,7 +9,7 @@ const {
   isNumber,
   isTuesday,
   isFuture,
-} = require("../errors/middleware");
+} = require("../../middleware/reservationsMiddleware");
 
 async function list(req, res) {
   const { date } = req.query;
@@ -28,7 +28,8 @@ async function create(req, res) {
 }
 
 async function update(req, res) {
-  const data = await service.update(req.body.data)
+  const { reservation_id } = req.params
+  const data = await service.update(reservation_id, req.body.data)
   res.json({ data })
 }
 
