@@ -2,7 +2,6 @@ const knex = require("../db/connection");
 const tableName = "tables";
 
 function list() {
-  console.log("SERVICE")
   return knex(tableName)
     .orderBy("table_name")
     .select("*")
