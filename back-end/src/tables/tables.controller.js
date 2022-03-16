@@ -1,8 +1,25 @@
 const { restart } = require("nodemon");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const service = require("./tables.service");
-const hasProperties = require("../errors/hasProperties")
+const hasProperties = require("../errors/hasProperties");
+const { listTables } = require("../../../front-end/src/utils/api");
+const { table } = require("../db/connection");
 
+function tableCapacity() {
+  return function (req, res, next) {
+    try {
+      if (res.locals.table.reservation_id === null) {
+        next()
+      } else {
+        res.locals.reservation = await getReservation(
+          res.locals.table.reservation_id
+        )
+      }
+    } catch (error) {
+      next(error)
+    }
+  }
+}
 
 async function list(req, res) {
   const data = await service.list()

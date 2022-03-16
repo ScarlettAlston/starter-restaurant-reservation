@@ -8,7 +8,7 @@ function list(date) {
     .orderBy("reservation_time");
 }
 
-function read(reservation_id) {
+function getReservation(reservation_id) {
   return knex(tableName)
     .select("*")
     .where({ reservation_id })

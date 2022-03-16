@@ -16,7 +16,7 @@ async function list(req, res) {
   res.json({ data: await service.list(date) });
 }
 
-async function read(req, res) {
+async function getReservation(req, res) {
   const { reservation_id } = req.params
   const data = await service.read(reservation_id)
   res.status(200).json({ data })
@@ -36,7 +36,7 @@ async function update(req, res) {
 module.exports = {
   list,
   update,
-  read,
+  getReservation,
   create: [
     hasProperties(
       "first_name",

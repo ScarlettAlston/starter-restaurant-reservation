@@ -122,18 +122,6 @@ function reservationExists() {
   }
 }
 
-// function tableCapacity() {
-//   return function (req, res, next) {
-//     try {
-//       if (req.body.data.capacity > ) {
-
-//       }
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// }
-
 module.exports = {
   resTimeValid,
   dateObjects,

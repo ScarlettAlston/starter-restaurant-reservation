@@ -10,7 +10,7 @@ router
 
 router
   .route("/:reservation_id")
-  .get(controller.read)
+  .get(controller.getReservation)
   .all(methodNotAllowed)
 
 module.exports = router;
