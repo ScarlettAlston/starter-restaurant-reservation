@@ -1,11 +1,17 @@
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const service = require("./tables.service");
 const hasProperties = require("../errors/hasProperties");
-const { tableExists, reservationExists, tableOccupied, tableCapacity } = require("../middleware/tablesMiddleware")
+const { tableExists, reservationExists, tableOccupied, tableCapacity, isNumber, tableName } = require("../middleware/tablesMiddleware")
 
 async function list(req, res) {
   const data = await service.list()
   res.json({ data })
+}
+
+async function read(req, res) {
+  const { table_id } = req.params
+  const data = await service.read(table_id)
+  res.json({ data });
 }
 
 async function create(req, res) {
@@ -22,13 +28,16 @@ async function update(req, res) {
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
-  create: [hasProperties("table_name", "capacity"), asyncErrorBoundary(create)],
+  read,
+  create: [hasProperties("table_name", "capacity"), tableName(), isNumber(), asyncErrorBoundary(create)],
   update: [
-    hasProperties("table_name", "capacity", "reservation_id"),
+    hasProperties("reservation_id"),
     asyncErrorBoundary(tableExists()),
     asyncErrorBoundary(reservationExists()),
     tableOccupied(),
     tableCapacity(),
+    tableName(),
+    isNumber(),
     asyncErrorBoundary(update)
   ]
 }

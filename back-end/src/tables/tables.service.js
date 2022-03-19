@@ -7,6 +7,14 @@ function list() {
     .select("*")
 }
 
+function read(table_id) {
+  return knex(tableName)
+    .select("*")
+    .where({ table_id })
+    .first()
+
+}
+
 function create(newTable) {
   return knex(tableName)
     .insert(newTable)
@@ -23,6 +31,7 @@ function update(updatedTable) {
 
 module.exports = {
   list,
+  read,
   create,
   update
 }

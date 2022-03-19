@@ -1,3 +1,6 @@
+const service = require("../tables/tables.service")
+const serviceRes = require("../reservations/reservations.service")
+
 function tableCapacity() {
   return async function (req, res, next) {
     try {
@@ -5,7 +8,7 @@ function tableCapacity() {
       if (table.reservation_id === null) {
         next()
       }
-      res.locals.reservation = await service.getReservation(table.reservation_id);
+      res.locals.reservation = await serviceRes.getReservation(table.reservation_id);
       if (table.capacity >= res.locals.reservation.people) {
         next()
       } else {
@@ -58,10 +61,44 @@ function tableExists() {
 function reservationExists() {
   return function (req, res, next) {
     try {
-      if (!req.body.data.reservation_id) {
+      if (req.body.data.reservation_id) {
         next()
       } else {
+        const error = new Error(`reservation_id ${reservation_id} does not exist.`)
+        error.status = 404
+        throw error;
+      }
+    } catch (error) {
+      next(error)
+    }
+  }
+}
 
+function isNumber() {
+  return function (req, res, next) {
+    try {
+      if (typeof req.body.data.capacity === "number") {
+        next();
+      } else {
+        const error = new Error("Input for capacity is not valid.");
+        error.status = 400;
+        throw error;
+      }
+    } catch (error) {
+      next(error);
+    }
+  };
+}
+
+function tableName() {
+  return function (req, res, next) {
+    try {
+      if (req.body.data.table_name.length > 1) {
+        next()
+      } else {
+        const error = new Error(`Input for 'table_name' must be more than 1 character`)
+        error.status = 400;
+        throw error;
       }
     } catch (error) {
       next(error)
@@ -72,6 +109,8 @@ function reservationExists() {
 
 module.exports = {
   tableCapacity,
+  tableName,
+  isNumber,
   tableExists,
   reservationExists,
   tableOccupied,

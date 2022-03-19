@@ -18,7 +18,7 @@ async function list(req, res) {
 
 async function getReservation(req, res) {
   const { reservation_id } = req.params
-  const data = await service.read(reservation_id)
+  const data = await service.getReservation(reservation_id)
   res.status(200).json({ data })
 }
 
