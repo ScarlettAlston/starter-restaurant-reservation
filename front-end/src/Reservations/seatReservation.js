@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from 'react'
-import { listTables } from '../utils/api';
+import { useParams } from 'react-router-dom'
+import { listTables, getReservation } from '../utils/api';
+
 
 const SeatReservation = () => {
+  const [reservation, setReservation] = useState({});
   const [tables, setTables] = useState([]);
-  const [error, setError] = useState(null)
+  const [error, setError] = useState(null);
+  const reservation_id = useParams();
 
-  let capacity;
+  useEffect(() => loadTables(reservation_id), [reservation_id])
 
-  useEffect(() => loadTables(capacity), [capacity])
-
-  function loadTables(capacity) {
+  function loadTables({ reservation_id }) {
     const abortController = new AbortController()
     setError(null);
-    listTables({ capacity }, abortController.signal)
+    listTables(abortController.signal)
       .then(setTables)
+      .catch(setError)
+    getReservation(reservation_id, abortController.signal)
+      .then(setReservation)
       .catch(setError)
     return () => abortController.abort()
   }
