@@ -27,7 +27,7 @@ module.exports = {
     hasProperties("table_name", "capacity", "reservation_id"),
     asyncErrorBoundary(tableExists()),
     asyncErrorBoundary(reservationExists()),
-    isOccupied(),
+    tableOccupied(),
     tableCapacity(),
     asyncErrorBoundary(update)
   ]
