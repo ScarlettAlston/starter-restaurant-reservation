@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import ErrorAlert from "../layout/ErrorAlert"
 import { listTables, getReservation } from '../utils/api';
 
 
@@ -31,6 +32,24 @@ const SeatReservation = () => {
       <table className="table table-striped">
         <thead>
           <tr>
+            <th scope="col">Time</th>
+            <th scope="col">Name</th>
+            <th scope="col">Party Size</th>
+            <th scope="col">Mobile Number</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{reservation.reservation_time}</td>
+            <td>{reservation.first_name} {reservation.last_name}</td>
+            <td>{reservation.people}</td>
+            <td>{reservation.mobile_number}</td>
+          </tr>
+        </tbody>
+      </table>
+      <table className="table table-striped">
+        <thead>
+          <tr>
             <th scope="col">Table Number</th>
             <th scope="col">Table Name</th>
             <th scope="col">Capacity</th>
@@ -48,6 +67,9 @@ const SeatReservation = () => {
           })}
         </tbody>
       </table>
+      <div>
+        <ErrorAlert error={error} />
+      </div>
     </div>
   )
 }
