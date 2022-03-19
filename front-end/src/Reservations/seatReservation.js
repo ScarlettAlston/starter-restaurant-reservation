@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import ErrorAlert from "../layout/ErrorAlert"
-import { listTables, getReservation } from '../utils/api';
+import { listTables, getReservation, seatTable } from '../utils/api';
 
 
 const SeatReservation = () => {
   const [reservation, setReservation] = useState({});
   const [tables, setTables] = useState([]);
+  const [selectedValue, setSelectedValue] = useState({})
   const [error, setError] = useState(null);
   const reservation_id = useParams();
+  const history = useHistory();
 
   useEffect(() => loadTables(reservation_id), [reservation_id])
 
@@ -24,6 +26,25 @@ const SeatReservation = () => {
     return () => abortController.abort()
   }
 
+  async function handleSubmit(event) {
+    try {
+      event.preventDefault();
+      const abortController = new AbortController();
+      await seatTable(reservation_id, selectedValue, abortController.signal).then(() => {
+        history.push("/dashboard")
+      })
+    } catch (error) {
+      setError(error.message)
+    }
+  }
+
+  function handleCancel() {
+    history.goBack()
+  }
+
+  function changeHandler({ target }) {
+    setSelectedValue(target.value)
+  }
 
 
   return (
@@ -36,6 +57,7 @@ const SeatReservation = () => {
             <th scope="col">Name</th>
             <th scope="col">Party Size</th>
             <th scope="col">Mobile Number</th>
+            <th scope="col"> </th>
           </tr>
         </thead>
         <tbody>
@@ -44,9 +66,32 @@ const SeatReservation = () => {
             <td>{reservation.first_name} {reservation.last_name}</td>
             <td>{reservation.people}</td>
             <td>{reservation.mobile_number}</td>
+            <td>
+              <select
+                onChange={changeHandler}
+                id="table_id" value={selectedValue}
+                className="form-select"
+                aria-label="Select Table">
+                <option value="">Select Table</option>
+                {tables.map((table) => {
+                  return (
+                    <option
+                      key={table.table_id}
+                      name="table_id"
+                      value={table.table_id}>
+                      {table.table_name} - {table.capacity}
+                    </option>
+                  );
+                })}
+              </select>
+            </td>
           </tr>
         </tbody>
       </table>
+      <div>
+        <button type="button" className="btn btn-danger" onClick={(event) => handleCancel(event)}>Cancel</button>
+        <button type="button" className="btn btn-primary" onClick={(event) => handleSubmit(event)} >Submit</button>
+      </div>
       <table className="table table-striped">
         <thead>
           <tr>

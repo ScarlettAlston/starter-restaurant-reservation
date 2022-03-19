@@ -43,7 +43,7 @@ const CreateReservation = () => {
         type="button"
         className="btn btn-secondary mr-2"
         name="cancel"
-        onClick={(event) => handleCancel()}
+        onClick={(event) => handleCancel(event)}
       >
         Cancel
       </button>
