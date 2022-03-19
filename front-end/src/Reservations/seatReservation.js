@@ -69,7 +69,9 @@ const SeatReservation = () => {
             <td>
               <select
                 onChange={changeHandler}
-                id="table_id" value={selectedValue}
+                id="table_id"
+                name="table_id"
+                value={selectedValue}
                 className="form-select"
                 aria-label="Select Table">
                 <option value="">Select Table</option>
@@ -77,7 +79,6 @@ const SeatReservation = () => {
                   return (
                     <option
                       key={table.table_id}
-                      name="table_id"
                       value={table.table_id}>
                       {table.table_name} - {table.capacity}
                     </option>
@@ -90,7 +91,7 @@ const SeatReservation = () => {
       </table>
       <div>
         <button type="button" className="btn btn-danger" onClick={(event) => handleCancel(event)}>Cancel</button>
-        <button type="button" className="btn btn-primary" onClick={(event) => handleSubmit(event)} >Submit</button>
+        <button type="submit" className="btn btn-primary" onClick={(event) => handleSubmit(event)}>Submit</button>
       </div>
       <table className="table table-striped">
         <thead>

@@ -4,17 +4,13 @@ const serviceRes = require("../reservations/reservations.service")
 function tableCapacity() {
   return async function (req, res, next) {
     try {
-      const table = req.body.data
-      if (table.reservation_id === null) {
-        next()
-      }
-      res.locals.reservation = await serviceRes.getReservation(table.reservation_id);
+      const table = res.locals.table
       if (table.capacity >= res.locals.reservation.people) {
         next()
       } else {
-        const table = table.table_name;
-        const tableCapacity = table.capacity
-        const error = new Error(`Table ${tableName} has capacity of ${tableCapacity}. Please choose another table.`)
+        const name = table.table_name;
+        const capacity = table.capacity
+        const error = new Error(`Table ${name} has capacity of ${capacity}. Please choose another table.`)
         error.status = 400;
         throw error;
       }
@@ -48,7 +44,7 @@ function tableExists() {
         res.locals.table = table;
         next();
       } else {
-        const error = new Error(`Table id: ${table_id} does not exists`)
+        const error = new Error(`Table id: ${table.table_id} does not exist`)
         error.status = 404;
         throw error;
       }
@@ -59,12 +55,14 @@ function tableExists() {
 }
 
 function reservationExists() {
-  return function (req, res, next) {
+  return async function (req, res, next) {
     try {
-      if (req.body.data.reservation_id) {
+      const reservation = await serviceRes.getReservation(req.body.data.reservation_id)
+      if (reservation) {
+        res.locals.reservation = reservation;
         next()
       } else {
-        const error = new Error(`reservation_id ${reservation_id} does not exist.`)
+        const error = new Error(`reservation_id ${req.body.data.reservation_id} does not exist.`)
         error.status = 404
         throw error;
       }

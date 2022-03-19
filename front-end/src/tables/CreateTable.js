@@ -7,7 +7,7 @@ import { TableForm } from './TableForm';
 export const CreateTable = () => {
   const [formData, setFormData] = useState({
     table_name: "",
-    capacity: 1,
+    capacity: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
   const history = useHistory();
@@ -15,7 +15,8 @@ export const CreateTable = () => {
   async function handleSubmit(event) {
     try {
       event.preventDefault();
-      await createTable(formData).then(() => {
+      const parsedData = { ...formData, capacity: Number(formData.capacity) }
+      await createTable(parsedData).then(() => {
         history.push("/dashboard")
       })
     } catch (error) {
@@ -39,7 +40,7 @@ export const CreateTable = () => {
         type="button"
         className="btn btn-secondary mr-2"
         name="cancel"
-        onClick={(event) => handleCancel()}
+        onClick={(event) => handleCancel(event)}
       >
         Cancel
       </button>

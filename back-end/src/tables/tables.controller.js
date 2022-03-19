@@ -36,8 +36,6 @@ module.exports = {
     asyncErrorBoundary(reservationExists()),
     tableOccupied(),
     tableCapacity(),
-    tableName(),
-    isNumber(),
     asyncErrorBoundary(update)
   ]
 }
