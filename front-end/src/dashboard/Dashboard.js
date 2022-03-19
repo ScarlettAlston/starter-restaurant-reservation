@@ -55,7 +55,7 @@ function Dashboard() {
         </div>
       </div>
       <div>
-        <table className="table table-striped">
+        <table className="mb table table-striped">
           <thead>
             <tr>
               <th scope="col">Time</th>
@@ -88,7 +88,9 @@ function Dashboard() {
           </tbody>
         </table>
       </div>
+      <br></br>
       <div>
+        <h4> List of Tables </h4>
         <table className="table table-striped">
           <thead>
             <tr>

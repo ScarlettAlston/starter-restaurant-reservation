@@ -15,6 +15,7 @@ const SeatReservation = () => {
     listTables({ capacity }, abortController.signal)
       .then(setTables)
       .catch(setError)
+    return () => abortController.abort()
   }
 
 

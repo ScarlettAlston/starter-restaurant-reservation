@@ -4,7 +4,7 @@ import Dashboard from "../dashboard/Dashboard";
 import NotFound from "./NotFound";
 import CreateReservation from "../reservations/CreateReservation";
 import { CreateTable } from "../tables/CreateTable";
-import SeatReservation from "../reservations/seatReservation";
+import SeatReservation from "../reservations/SeatReservation";
 
 /**
  * Defines all the routes for the application.
