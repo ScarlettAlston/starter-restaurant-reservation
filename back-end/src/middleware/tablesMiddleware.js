@@ -37,9 +37,43 @@ function tableOccupied() {
   }
 }
 
+function tableExists() {
+  return async function (req, res, next) {
+    try {
+      const table = await service.read(req.params.table_id);
+      if (table) {
+        res.locals.table = table;
+        next();
+      } else {
+        const error = new Error(`Table id: ${table_id} does not exists`)
+        error.status = 404;
+        throw error;
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+}
+
+function reservationExists() {
+  return function (req, res, next) {
+    try {
+      if (!req.body.data.reservation_id) {
+        next()
+      } else {
+
+      }
+    } catch (error) {
+      next(error)
+    }
+  }
+}
+
 
 module.exports = {
   tableCapacity,
+  tableExists,
+  reservationExists,
   tableOccupied,
   tableExists,
 }

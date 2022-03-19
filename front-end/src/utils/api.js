@@ -95,7 +95,7 @@ export async function listTables(signal) {
   return await fetchJson(url, { headers, signal }, []);
 }
 
-export async function updateTables(table, signal) {
+export async function seatTable(table, signal) {
   const url = `${API_BASE_URL}/tables/${table.table_id}/seat`
   const options = {
     method: "PUT",

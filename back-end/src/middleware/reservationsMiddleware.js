@@ -108,20 +108,6 @@ function dateObjects() {
   };
 }
 
-function reservationExists() {
-  return function (req, res, next) {
-    try {
-      if (!req.body.data.reservation_id) {
-        next()
-      } else {
-
-      }
-    } catch (error) {
-      next(error)
-    }
-  }
-}
-
 module.exports = {
   resTimeValid,
   dateObjects,
