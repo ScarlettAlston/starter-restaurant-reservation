@@ -10,7 +10,7 @@ router
 
 router
   .route("/:table_id/seat")
-  .put(controller.update)
+  .put(controller.seatTable)
 
 
 module.exports = router;

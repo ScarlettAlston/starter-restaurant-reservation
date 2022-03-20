@@ -104,6 +104,22 @@ function tableName() {
   }
 }
 
+function removeResFromFreeTable() {
+  return function (req, res, next) {
+    try {
+      if (res.locals.table.reservation_id != null) {
+        next()
+      } else {
+        const error = new Error('Cannot remove reservation from unoccupied table')
+        error.status = 400;
+        throw error;
+      }
+    } catch (error) {
+      next(error)
+    }
+  }
+}
+
 
 module.exports = {
   tableCapacity,
