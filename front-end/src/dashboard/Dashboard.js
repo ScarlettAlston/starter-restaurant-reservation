@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { listReservations, listTables } from "../utils/api";
+import { listReservations, listTables, removeReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { today, previous, next } from "../utils/date-time";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
 function Dashboard() {
   const [reservations, setReservations] = useState([]);
@@ -10,6 +10,7 @@ function Dashboard() {
   const [error, setError] = useState(null);
   const search = useLocation().search;
   const dateParam = new URLSearchParams(search).get("date");
+  const history = useHistory()
 
   let date;
 
@@ -31,6 +32,16 @@ function Dashboard() {
       .then(setTables)
       .catch(setError);
     return () => abortController.abort();
+  }
+
+  async function handleFinish(table_id) {
+    const response = window.confirm(
+      "Is this table ready to seat new guests?\nThis cannot be undone."
+    )
+    if (response) {
+      await removeReservation(table_id);
+      history.go(0)
+    }
   }
 
   return (
@@ -97,6 +108,7 @@ function Dashboard() {
               <th scope="col">Table Name</th>
               <th scope="col">Capacity</th>
               <th scope="col">Availability</th>
+              <th scope="col"> </th>
             </tr>
           </thead>
           <tbody>
@@ -109,6 +121,18 @@ function Dashboard() {
                     <td data-table-id-status={table.table_id}>Occupied</td>}
                   {!table.reservation_id &&
                     <td data-table-id-status={table.table_id}>Free</td>}
+                  {table.reservation_id &&
+                    <td>
+                      <button
+                        onClick={() => handleFinish(table.table_id)}
+                        data-table-id-status={table.table_id}
+                        type="button"
+                        className="btn-danger">
+                        Finish
+                      </button>
+                    </td>}
+                  {!table.reservation_id &&
+                    <td data-table-id-status={table.table_id}> </td>}
                 </tr>
               );
             })}
