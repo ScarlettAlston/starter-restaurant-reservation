@@ -125,7 +125,7 @@ function Dashboard() {
                     <td>
                       <button
                         onClick={() => handleFinish(table.table_id)}
-                        data-table-id-status={table.table_id}
+                        data-table-id-finish={table.table_id}
                         type="button"
                         className="btn btn-danger">
                         Finish
