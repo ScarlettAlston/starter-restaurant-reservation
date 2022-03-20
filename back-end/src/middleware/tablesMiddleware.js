@@ -44,7 +44,7 @@ function tableExists() {
         res.locals.table = table;
         next();
       } else {
-        const error = new Error(`Table id: ${table.table_id} does not exist`)
+        const error = new Error(`Table id ${req.params.table_id} does not exist`)
         error.status = 404;
         throw error;
       }
@@ -110,7 +110,7 @@ function removeResFromFreeTable() {
       if (res.locals.table.reservation_id != null) {
         next()
       } else {
-        const error = new Error('Cannot remove reservation from unoccupied table')
+        const error = new Error('This table is not occupied')
         error.status = 400;
         throw error;
       }
