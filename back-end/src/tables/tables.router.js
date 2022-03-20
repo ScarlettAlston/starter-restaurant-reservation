@@ -11,6 +11,7 @@ router
 router
   .route("/:table_id/seat")
   .put(controller.seatTable)
+  .delete(controller.removeReservation)
 
 
 module.exports = router;

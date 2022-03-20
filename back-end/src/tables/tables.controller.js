@@ -52,8 +52,8 @@ module.exports = {
     asyncErrorBoundary(seatTable)
   ],
   removeReservation: [
-    asyncErrorBoundary(removeReservation),
     asyncErrorBoundary(tableExists()),
-    removeResFromFreeTable()
+    removeResFromFreeTable(),
+    asyncErrorBoundary(removeReservation),
   ]
 }

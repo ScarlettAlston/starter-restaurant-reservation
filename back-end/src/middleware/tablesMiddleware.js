@@ -129,4 +129,5 @@ module.exports = {
   reservationExists,
   tableOccupied,
   tableExists,
+  removeResFromFreeTable,
 }
