@@ -73,6 +73,7 @@ function Dashboard() {
               <th scope="col">Name</th>
               <th scope="col">Party Size</th>
               <th scope="col">Mobile Number</th>
+              <th scope="col">Status</th>
               <th scope="col">Seat Party</th>
             </tr>
           </thead>
@@ -86,11 +87,12 @@ function Dashboard() {
                   </td>
                   <td>{reservation.people}</td>
                   <td>{reservation.mobile_number}</td>
+                  <td data-reservation-id-status={reservation.reservation_id}></td>
                   <td>
                     <Link to={`/reservations/${reservation.reservation_id}/seat`}>
                       <button type="button" className="mx-1 btn btn-outline-secondary">
                         Seat
-                      </button>{" "}
+                      </button>
                     </Link>
                   </td>
                 </tr>
