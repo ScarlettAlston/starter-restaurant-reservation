@@ -33,10 +33,18 @@ async function update(req, res) {
   res.json({ data })
 }
 
+async function updateStatus(req, res) {
+  const updatedReservation = res.locals.reservation
+  updatedReservation.status = req.body.data.status
+  const data = await service.update(updatedReservation)
+  res.status(200).json({ data })
+}
+
 module.exports = {
   list,
   update,
   getReservation,
+  updateStatus,
   create: [
     hasProperties(
       "first_name",
