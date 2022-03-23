@@ -10,7 +10,7 @@ function tableCapacity() {
       } else {
         const name = table.table_name;
         const capacity = table.capacity
-        const error = new Error(`Table ${name} has capacity of ${capacity}. Please choose another table.`)
+        const error = new Error(`Table name: ${name}, has a party capacity of ${capacity}. Please choose another table.`)
         error.status = 400;
         throw error;
       }
@@ -26,7 +26,7 @@ function tableOccupied() {
       if (!res.locals.table.reservation_id) {
         next()
       } else {
-        const error = new Error(`${res.locals.table.table_id} is occupied!`)
+        const error = new Error(`Table number: ${res.locals.table.table_id}, is occupied. Please choose another table.`)
         error.status = 400;
         throw error;
       }

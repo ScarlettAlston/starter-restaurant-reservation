@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
-import ErrorAlert from "../layout/ErrorAlert"
 import { listTables, getReservation, seatTable } from '../utils/api';
 
 
@@ -114,7 +113,9 @@ const SeatReservation = () => {
         </tbody>
       </table>
       <div>
-        <ErrorAlert error={error} />
+        {error && (
+          <h5 className="alert alert-danger mx-1">{error}</h5>
+        )}
       </div>
     </div>
   )

@@ -34,6 +34,8 @@ function Dashboard() {
     return () => abortController.abort();
   }
 
+
+
   async function handleFinish(table_id) {
     const response = window.confirm(
       "Is this table ready to seat new guests?\nThis cannot be undone."
@@ -43,6 +45,12 @@ function Dashboard() {
       history.go(0)
     }
   }
+
+  async function handleSeat(reservation_id) {
+    let reservation
+  }
+
+
 
   return (
     <main>
@@ -88,17 +96,21 @@ function Dashboard() {
                   <td>{reservation.people}</td>
                   <td>{reservation.mobile_number}</td>
                   <td data-reservation-id-status={reservation.reservation_id}>{reservation.status}</td>
-                  {reservation.status &&
-                    <td>
+
+                  <td>
+                    {reservation.status === "booked" &&
                       <Link to={`/reservations/${reservation.reservation_id}/seat`}>
                         <button type="button" className="mx-1 btn btn-outline-secondary">
                           Seat
                         </button>
                       </Link>
+                    }
+                  </td>
 
-                    </td>}
-                  {reservation.status &&
-                    <td> </td>}
+                  <td>
+                    {reservation.status !== "booked" &&
+                      {}}
+                  </td>
                 </tr>
               );
             })}
