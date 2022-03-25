@@ -3,13 +3,15 @@ const service = require("./reservations.service");
 const hasProperties = require("../errors/hasProperties");
 const {
   isDate,
+  statusIsValid,
   reservationExists,
-  reservationIsSeated,
+  reservationIsBooked,
   validateTime,
   resTimeValid,
   dateObjects,
   isNumber,
   isTuesday,
+  resStatusFinished,
   isFuture,
 } = require("../middleware/reservationsMiddleware");
 
@@ -39,7 +41,6 @@ async function updateStatus(req, res) {
   const updatedReservation = res.locals.reservation
   updatedReservation.status = req.body.data.status
   const data = await service.update(updatedReservation)
-
   res.status(200).json({ data })
 }
 
@@ -49,7 +50,8 @@ module.exports = {
   getReservation,
   updateStatus: [
     reservationExists(),
-    reservationIsSeated(),
+    statusIsValid(),
+    resStatusFinished(),
     asyncErrorBoundary(updateStatus)
   ],
   create: [
@@ -68,6 +70,7 @@ module.exports = {
     isTuesday(),
     isFuture(),
     resTimeValid(),
+    reservationIsBooked(),
     asyncErrorBoundary(create),
   ],
 };

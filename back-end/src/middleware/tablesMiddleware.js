@@ -123,6 +123,22 @@ function removeResFromFreeTable() {
   }
 }
 
+function seatedReservation() {
+  return function (req, res, next) {
+    try {
+      if (res.locals.reservation.status != "seated") {
+        next()
+      } else {
+        const error = new Error('This reservation has already been seated')
+        error.status = 400;
+        throw error;
+      }
+    } catch (error) {
+      next(error)
+    }
+  }
+}
+
 
 module.exports = {
   tableCapacity,
@@ -132,5 +148,6 @@ module.exports = {
   reservationExists,
   tableOccupied,
   tableExists,
+  seatedReservation,
   removeResFromFreeTable,
 }
