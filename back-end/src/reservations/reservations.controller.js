@@ -3,6 +3,8 @@ const service = require("./reservations.service");
 const hasProperties = require("../errors/hasProperties");
 const {
   isDate,
+  reservationExists,
+  reservationIsSeated,
   validateTime,
   resTimeValid,
   dateObjects,
@@ -44,7 +46,11 @@ module.exports = {
   list,
   update,
   getReservation,
-  updateStatus,
+  updateStatus: [
+    reservationExists(),
+    reservationIsSeated(),
+    asyncErrorBoundary(updateStatus)
+  ],
   create: [
     hasProperties(
       "first_name",

@@ -16,6 +16,22 @@ function isDate() {
   };
 }
 
+function reservationIsSeated() {
+  return function (req, res, next) {
+    try {
+      if (res.locals.reservation.status === "booked") {
+        next()
+      } else {
+        const error = new Error("This reservation's status is seated")
+        error.status = 400;
+        throw error;
+      }
+    } catch (error) {
+      next(error)
+    }
+  }
+}
+
 function isFuture() {
   return function (req, res, next) {
     try {
@@ -108,7 +124,28 @@ function dateObjects() {
   };
 }
 
+function reservationExists() {
+  return async function (req, res, next) {
+    try {
+      const reservation = await service.getReservation(req.params.reservation_id);
+      if (reservation) {
+        res.locals.reservation = reservation;
+        next();
+        console.log(res.locals.reservation)
+      } else {
+        const error = new Error('Reservation does not exist.');
+        error.status = 404;
+        throw error;
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+}
+
 module.exports = {
+  reservationIsSeated,
+  reservationExists,
   resTimeValid,
   dateObjects,
   isDate,
