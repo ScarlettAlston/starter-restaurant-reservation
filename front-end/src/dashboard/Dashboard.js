@@ -47,7 +47,7 @@ function Dashboard() {
   }
 
   async function handleSeat(reservation_id) {
-    let reservation
+    const response = 
   }
 
 

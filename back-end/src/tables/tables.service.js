@@ -29,6 +29,7 @@ function update(updatedTable) {
     .update(updatedTable, "*")
 }
 
+
 module.exports = {
   list,
   read,

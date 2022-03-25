@@ -1,5 +1,6 @@
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const service = require("./tables.service");
+const resService = require("../reservations/reservations.service")
 const hasProperties = require("../errors/hasProperties");
 const { tableExists, reservationExists, tableOccupied, tableCapacity, isNumber, tableName, removeResFromFreeTable } = require("../middleware/tablesMiddleware")
 
@@ -20,10 +21,13 @@ async function create(req, res) {
 }
 
 async function seatTable(req, res) {
-  const data = res.locals.table;
   res.locals.table.reservation_id = res.locals.reservation.reservation_id;
-  await service.update(res.locals.table);
-  res.json({ data })
+  res.locals.reservation.status = "seated";
+  const data = await service.update(res.locals.table);
+  res.json({ data });
+
+  const resData = await resService.update(res.locals.reservation);
+  res.json({ resData });
 }
 
 async function removeReservation(req, res) {
