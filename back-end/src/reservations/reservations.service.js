@@ -27,6 +27,7 @@ function update(updatedReservation) {
     .select("*")
     .where({ reservation_id: updatedReservation.reservation_id })
     .update(updatedReservation, "*")
+    .then(newRecord => newRecord[0])
 }
 
 module.exports = {

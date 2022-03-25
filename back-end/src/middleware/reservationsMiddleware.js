@@ -1,3 +1,5 @@
+service = require("../reservations/reservations.service")
+
 function isDate() {
   return function (req, res, next) {
     try {
@@ -133,7 +135,7 @@ function reservationExists() {
         next();
         console.log(res.locals.reservation)
       } else {
-        const error = new Error('Reservation does not exist.');
+        const error = new Error(`Reservation ID: ${req.params.reservation_id} does not exist.`);
         error.status = 404;
         throw error;
       }
