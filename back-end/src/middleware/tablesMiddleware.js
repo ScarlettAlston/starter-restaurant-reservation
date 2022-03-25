@@ -105,10 +105,13 @@ function tableName() {
 }
 
 function removeResFromFreeTable() {
-  return function (req, res, next) {
+  return async function (req, res, next) {
     try {
-      if (res.locals.table.reservation_id != null) {
-        next()
+      res.locals.reservation = await serviceRes.getReservation(res.locals.table.reservation_id);
+      if (res.locals.reservation) {
+        if (res.locals.table.reservation_id != null) {
+          next()
+        }
       } else {
         const error = new Error('This table is not occupied')
         error.status = 400;

@@ -21,7 +21,7 @@ function isDate() {
 function reservationIsSeated() {
   return function (req, res, next) {
     try {
-      if (res.locals.reservation.status === "booked") {
+      if (res.locals.reservation.status === "booked" || res.locals.reservation.status === "finished") {
         next()
       } else {
         const error = new Error("This reservation's status is seated")
@@ -133,7 +133,6 @@ function reservationExists() {
       if (reservation) {
         res.locals.reservation = reservation;
         next();
-        console.log(res.locals.reservation)
       } else {
         const error = new Error(`Reservation ID: ${req.params.reservation_id} does not exist.`);
         error.status = 404;

@@ -24,6 +24,7 @@ async function create(req, res) {
 async function seatTable(req, res) {
   res.locals.table.reservation_id = res.locals.reservation.reservation_id;
   res.locals.reservation.status = "seated";
+
   const data = await service.update(res.locals.table);
   res.json({ data });
 
@@ -32,12 +33,12 @@ async function seatTable(req, res) {
 }
 
 async function removeReservation(req, res) {
-  const data = res.locals.table;
   res.locals.table.reservation_id = null;
-  await service.update(res.locals.table);
-  res.json({ data })
+  res.locals.reservation.status = "finished";
+  const data = { table: await service.update(res.locals.table) };
+  data.reservation = await resService.update(res.locals.reservation);
+  res.status(200).json({ data });
 }
-
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
