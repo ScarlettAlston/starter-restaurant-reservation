@@ -18,13 +18,13 @@ function isDate() {
   };
 }
 
-function reservationIsSeated() {
-  return function (req, res, next) {
+function reservationIsBooked() {
+  return async function (req, res, next) {
     try {
-      if (res.locals.reservation.status === "booked" || res.locals.reservation.status === "finished") {
+      if (req.body.data.status === "booked" || req.body.data.status === undefined) {
         next()
       } else {
-        const error = new Error("This reservation's status is seated")
+        const error = new Error("This reservation's status is seated or finished")
         error.status = 400;
         throw error;
       }
@@ -33,6 +33,25 @@ function reservationIsSeated() {
     }
   }
 }
+
+function statusIsValid() {
+  return function (req, res, next) {
+    try {
+      const status = req.body.data.status
+      if (status === "booked" || status === "seated" || status === "finished") {
+        next()
+      } else {
+        const error = new Error('Status is not valid or unknown')
+        error.status = 400;
+        throw error;
+      }
+    } catch (error) {
+      next(error)
+    }
+  }
+}
+
+
 
 function isFuture() {
   return function (req, res, next) {
@@ -144,8 +163,25 @@ function reservationExists() {
   }
 }
 
+function resStatusFinished() {
+  return function (req, res, next) {
+    try {
+      if (res.locals.reservation.status != "finished") {
+        next()
+      } else {
+        const error = new Error("Cannot update finished reservation")
+        error.status = 400;
+        throw error;
+      }
+    } catch (error) {
+      next(error)
+    }
+  }
+}
+
 module.exports = {
-  reservationIsSeated,
+  reservationIsBooked,
+  statusIsValid,
   reservationExists,
   resTimeValid,
   dateObjects,
@@ -153,5 +189,6 @@ module.exports = {
   isFuture,
   isNumber,
   validateTime,
+  resStatusFinished,
   isTuesday,
 };

@@ -2,8 +2,8 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const service = require("./tables.service");
 const resService = require("../reservations/reservations.service")
 const hasProperties = require("../errors/hasProperties");
-const { tableExists, reservationExists, tableOccupied, tableCapacity, isNumber, tableName, removeResFromFreeTable, tableIsSeated, } = require("../middleware/tablesMiddleware");
-const { reservationIsSeated } = require("../middleware/reservationsMiddleware");
+const { tableExists, reservationExists, tableOccupied, tableCapacity, isNumber, tableName, removeResFromFreeTable, seatedReservation, } = require("../middleware/tablesMiddleware");
+const { reservationIsBooked } = require("../middleware/reservationsMiddleware");
 
 async function list(req, res) {
   const data = await service.list()
@@ -47,7 +47,7 @@ module.exports = {
     hasProperties("table_name", "capacity"),
     tableName(),
     isNumber(),
-    reservationIsSeated(),
+    reservationIsBooked(),
     asyncErrorBoundary(create)
   ],
   seatTable: [
@@ -56,6 +56,7 @@ module.exports = {
     asyncErrorBoundary(reservationExists()),
     tableOccupied(),
     tableCapacity(),
+    seatedReservation(),
     asyncErrorBoundary(seatTable)
   ],
   removeReservation: [

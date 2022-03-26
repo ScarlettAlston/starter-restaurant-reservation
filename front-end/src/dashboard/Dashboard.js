@@ -46,11 +46,6 @@ function Dashboard() {
     }
   }
 
-  async function handleSeat(reservation_id) {
-    const response = 
-  }
-
-
 
   return (
     <main>
@@ -105,11 +100,6 @@ function Dashboard() {
                         </button>
                       </Link>
                     }
-                  </td>
-
-                  <td>
-                    {reservation.status !== "booked" &&
-                      {}}
                   </td>
                 </tr>
               );
