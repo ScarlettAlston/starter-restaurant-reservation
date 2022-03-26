@@ -17,7 +17,11 @@ const {
 
 async function list(req, res) {
   const { date, mobile_number } = req.query;
-  res.json({ data: await service.list(date, mobile_number) });
+  if (mobile_number) {
+    res.json({ data: await service.SearchReservation(mobile_number) })
+  } else {
+    res.json({ data: await service.list(date, mobile_number) });
+  }
 }
 
 async function getReservation(req, res) {
