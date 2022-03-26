@@ -16,8 +16,12 @@ const {
 } = require("../middleware/reservationsMiddleware");
 
 async function list(req, res) {
-  const { date } = req.query;
-  res.json({ data: await service.list(date) });
+  const { date, mobile_number } = req.query;
+  if (mobile_number) {
+    res.json({ data: await service.SearchReservation(mobile_number) })
+  } else {
+    res.json({ data: await service.list(date, mobile_number) });
+  }
 }
 
 async function getReservation(req, res) {

@@ -9,6 +9,16 @@ function list(date) {
     .orderBy("reservation_time");
 }
 
+function SearchReservation(mobile_number) {
+  return knex(tableName)
+    .select("*")
+    .whereRaw(
+      "translate(mobile_number, '() -', '') like ?",
+      `%${mobile_number.replace(/\D/g, "")}%`
+    )
+    .orderBy("reservation_time")
+}
+
 function getReservation(reservation_id) {
   return knex(tableName)
     .select("*")
@@ -33,6 +43,7 @@ function update(updatedReservation) {
 
 module.exports = {
   list,
+  SearchReservation,
   getReservation,
   update,
   create,
