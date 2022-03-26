@@ -5,6 +5,7 @@ import NotFound from "./NotFound";
 import CreateReservation from "../reservations/CreateReservation";
 import { CreateTable } from "../tables/CreateTable";
 import SeatReservation from "../reservations/SeatReservation";
+import SearchReservation from "../reservations/SearchReservation"
 
 /**
  * Defines all the routes for the application.
@@ -33,6 +34,9 @@ function Routes() {
       </Route>
       <Route exact={true} path="/reservations/:reservation_id/seat">
         <SeatReservation />
+      </Route>
+      <Route exact={true} path="/dashboard/search">
+        <SearchReservation />
       </Route>
       <Route>
         <NotFound />
