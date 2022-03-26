@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 const SearchReservation = () => {
+  const [formData, setFormData] = useState({ mobile_number: "" })
 
+  useEffect(() => { })
 
+  function loadSearch() {
+
+  }
 
   return (
     <div>
