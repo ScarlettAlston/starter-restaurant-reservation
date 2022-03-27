@@ -46,6 +46,16 @@ function Dashboard() {
     }
   }
 
+  async function handleCancel(reservation_id) {
+    const response = window.confirm(
+      "Do you want to cancel this reservation?\nThis cannot be undone."
+    )
+    if (response) {
+      await removeReservation(reservation_id);
+      history.go(0)
+    }
+  }
+
 
   return (
     <main>
@@ -112,6 +122,7 @@ function Dashboard() {
                   </td>
                   <td>
                     <button
+                      onClick={() => handleCancel(reservation.reservation_id)}
                       data-reservation-id-cancel={reservation.reservation_id}
                       type="button"
                       className="mx-1 btn btn-danger">
