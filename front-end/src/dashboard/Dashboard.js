@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { listReservations, listTables, removeReservationFromTable } from "../utils/api";
+import { listReservations, listTables, removeReservationFromTable, updateStatus } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { today, previous, next } from "../utils/date-time";
 import { Link, useHistory, useLocation } from "react-router-dom";
@@ -51,7 +51,7 @@ function Dashboard() {
       "Do you want to cancel this reservation?\nThis cannot be undone."
     )
     if (response) {
-      await removeReservationFromTable(reservation_id);
+      await updateStatus(reservation_id);
       history.go(0)
     }
   }
