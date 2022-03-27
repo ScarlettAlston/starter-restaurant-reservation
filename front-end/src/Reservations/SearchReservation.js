@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import { listReservations, updateStatus } from '../utils/api';
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 const SearchReservation = () => {
   const [formData, setFormData] = useState({ mobile_number: "" })
   const [reservations, setReservations] = useState()
   const [errorMessage, setErrorMessage] = useState("");
-  const history = useHistory();
 
 
 
@@ -37,13 +36,20 @@ const SearchReservation = () => {
   }
 
   async function handleCancel(reservation_id) {
+    const abortController = new AbortController();
     const response = window.confirm(
       "Do you want to cancel this reservation?\nThis cannot be undone."
     )
     if (response) {
-      await updateStatus(reservation_id);
-      history.go(0)
+      await updateStatus("cancelled", reservation_id, abortController.signal);
+      const { mobile_number } = formData;
+      const data = await listReservations(
+        { mobile_number },
+        abortController.signal
+      );
+      setReservations([...data]);
     }
+    return () => abortController.abort();
   }
 
 

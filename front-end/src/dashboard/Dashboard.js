@@ -7,6 +7,7 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 function Dashboard() {
   const [reservations, setReservations] = useState([]);
   const [tables, setTables] = useState([]);
+  const [update, setUpdate] = useState(0);
   const [error, setError] = useState(null);
   const search = useLocation().search;
   const dateParam = new URLSearchParams(search).get("date");
@@ -20,7 +21,7 @@ function Dashboard() {
   const nextDate = next(date);
 
 
-  useEffect(() => loadDashboard(date), [date]);
+  useEffect(() => loadDashboard(date), [date, update]);
 
   function loadDashboard(date) {
     const abortController = new AbortController();
@@ -47,15 +48,16 @@ function Dashboard() {
   }
 
   async function handleCancel(reservation_id) {
+    const abortController = new AbortController();
     const response = window.confirm(
       "Do you want to cancel this reservation?\nThis cannot be undone."
     )
     if (response) {
-      await updateStatus(reservation_id);
-      history.go(0)
+      await updateStatus("cancelled", reservation_id, abortController.signal);
+      setUpdate(update + 1)
     }
+    return () => abortController.abort();
   }
-
 
   return (
     <main>

@@ -123,11 +123,11 @@ export async function removeReservationFromTable(table_id, signal) {
 }
 
 export async function updateStatus(newStatus, reservation_id, signal) {
-  const url = `${API_BASE_URL}/reservation/${reservation_id}/status`
+  const url = `${API_BASE_URL}/reservations/${reservation_id}/status`
   const options = {
     method: "PUT",
     headers,
-    body: JSON.stringify({ data: newStatus }),
+    body: JSON.stringify({ data: { status: newStatus } }),
     signal
   }
   return await fetchJson(url, options, {})
