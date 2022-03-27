@@ -72,6 +72,7 @@ const SearchReservation = () => {
                 <th scope="col">Mobile Number</th>
                 <th scope="col">Status</th>
                 <th scope="col"> </th>
+                <th scope="col"> </th>
               </tr>
             </thead>
             <tbody>
@@ -91,6 +92,14 @@ const SearchReservation = () => {
                           Edit
                         </button>
                       </Link>
+                    </td>
+                    <td>
+                      <button
+                        data-reservation-id-cancel={reservation.reservation_id}
+                        type="button"
+                        className="mx-1 btn btn-danger">
+                        Cancel
+                      </button>
                     </td>
                   </tr>
                 );

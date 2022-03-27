@@ -79,6 +79,7 @@ function Dashboard() {
               <th scope="col">Status</th>
               <th scope="col">Seat Party</th>
               <th scope="col"> </th>
+              <th scope="col"> </th>
             </tr>
           </thead>
           <tbody>
@@ -108,6 +109,14 @@ function Dashboard() {
                         Edit
                       </button>
                     </Link>
+                  </td>
+                  <td>
+                    <button
+                      data-reservation-id-cancel={reservation.reservation_id}
+                      type="button"
+                      className="mx-1 btn btn-danger">
+                      Cancel
+                    </button>
                   </td>
                 </tr>
               );
