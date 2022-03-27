@@ -9,9 +9,14 @@ const SearchReservation = () => {
 
 
 
-  async function handleFind() {
+  async function handleFind(event) {
     const abortController = new AbortController();
+    event.preventDefault()
     try {
+      setErrorMessage(null)
+      if (formData.mobile_number.length < 1) {
+        return setErrorMessage("You must enter at least one digit")
+      }
       const { mobile_number } = formData;
       const data = await listReservations(
         { mobile_number },
@@ -43,15 +48,15 @@ const SearchReservation = () => {
             name="mobile_number"
             className="mr-0 form-control"
             placeholder="Enter a customer's phone number"
-            aria-label="Reservation phonenumber"
-            aria-describedby="button-addon2"
+            aria-label="Reservation phone number"
+            required
             onChange={handleChange}
           />
           <button
             className="ml-0 btn btn-outline-secondary"
             type="submit"
             id="button-addon2"
-            onClick={() => handleFind()}>
+            onClick={(event) => handleFind(event)}>
             Find
           </button>
         </div>
