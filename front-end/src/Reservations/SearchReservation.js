@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { listReservations } from '../utils/api';
-
+import { Link } from "react-router-dom";
 const SearchReservation = () => {
   const [formData, setFormData] = useState({ mobile_number: "" })
   const [reservations, setReservations] = useState()
@@ -71,6 +71,7 @@ const SearchReservation = () => {
                 <th scope="col">Party Size</th>
                 <th scope="col">Mobile Number</th>
                 <th scope="col">Status</th>
+                <th scope="col"> </th>
               </tr>
             </thead>
             <tbody>
@@ -84,6 +85,13 @@ const SearchReservation = () => {
                     <td>{reservation.people}</td>
                     <td>{reservation.mobile_number}</td>
                     <td data-reservation-id-status={reservation.reservation_id}>{reservation.status}</td>
+                    <td>
+                      <Link to={`/reservations/${reservation.reservation_id}/edit`}>
+                        <button type="button" className="mx-1 btn btn-outline-secondary">
+                          Edit
+                        </button>
+                      </Link>
+                    </td>
                   </tr>
                 );
               })}
