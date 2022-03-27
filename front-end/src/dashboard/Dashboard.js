@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { listReservations, listTables, removeReservation } from "../utils/api";
+import { listReservations, listTables, removeReservationFromTable } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { today, previous, next } from "../utils/date-time";
 import { Link, useHistory, useLocation } from "react-router-dom";
@@ -41,7 +41,7 @@ function Dashboard() {
       "Is this table ready to seat new guests?\nThis cannot be undone."
     )
     if (response) {
-      await removeReservation(table_id);
+      await removeReservationFromTable(table_id);
       history.go(0)
     }
   }
@@ -51,7 +51,7 @@ function Dashboard() {
       "Do you want to cancel this reservation?\nThis cannot be undone."
     )
     if (response) {
-      await removeReservation(reservation_id);
+      await removeReservationFromTable(reservation_id);
       history.go(0)
     }
   }

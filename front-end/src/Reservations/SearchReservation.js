@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { listReservations, removeReservation } from '../utils/api';
+import { listReservations, removeReservationFromTable } from '../utils/api';
 import { Link, useHistory } from "react-router-dom";
 
 
@@ -41,7 +41,7 @@ const SearchReservation = () => {
       "Do you want to cancel this reservation?\nThis cannot be undone."
     )
     if (response) {
-      await removeReservation(reservation_id);
+      await removeReservationFromTable(reservation_id);
       history.go(0)
     }
   }
