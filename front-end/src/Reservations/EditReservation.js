@@ -19,10 +19,13 @@ const EditReservation = () => {
 
   async function handleSubmit(event) {
     try {
+      const abortController = new AbortController();
       event.preventDefault();
       const parsedData = { ...formData, people: Number(formData.people) }
-      await updateReservation(parsedData).then(() => {
-        history.goBack();
+      console.log(parsedData);
+      await updateReservation(reservation_id, parsedData, abortController.signal).then(() => {
+        const destination = `/dashboard?date=${formData.reservation_date}`;
+        history.push(destination);
       })
     } catch (error) {
       setErrorMessage(error.message);
