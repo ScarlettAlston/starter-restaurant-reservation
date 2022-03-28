@@ -50,7 +50,26 @@ async function updateStatus(req, res) {
 
 module.exports = {
   list,
-  update,
+  update: [
+    reservationExists(),
+    hasProperties(
+      "first_name",
+      "last_name",
+      "mobile_number",
+      "reservation_date",
+      "reservation_time",
+      "people"
+    ),
+    isDate(),
+    validateTime(),
+    dateObjects(),
+    isNumber(),
+    isTuesday(),
+    isFuture(),
+    resTimeValid(),
+    statusIsValid(),
+    resStatusFinished(),
+    asyncErrorBoundary(update)],
   getReservation,
   updateStatus: [
     reservationExists(),

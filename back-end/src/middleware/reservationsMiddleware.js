@@ -41,7 +41,7 @@ function statusIsValid() {
       if (status === "booked" || status === "seated" || status === "finished" || status === "cancelled") {
         next()
       } else {
-        const error = new Error('Status is not valid or unknown')
+        const error = new Error('Status is not valid and/or unknown')
         error.status = 400;
         throw error;
       }

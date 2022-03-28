@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from "react-router-dom";
-import { getReservation, createReservation } from '../utils/api';
+import { getReservation, updateReservation } from '../utils/api';
 import { ReservationForm } from './ReservationForm'
 
 const EditReservation = () => {
@@ -21,10 +21,9 @@ const EditReservation = () => {
     try {
       event.preventDefault();
       const parsedData = { ...formData, people: Number(formData.people) }
-      await createReservation(parsedData).then(() => {
-        const destination = `/reservations/${reservation_id}/edit`;
-        history.push(destination);
-      });
+      await updateReservation(parsedData).then(() => {
+        history.goBack();
+      })
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -35,14 +34,20 @@ const EditReservation = () => {
   }
 
 
-  useEffect(loadReservation, [reservation_id])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => loadReservation(), [reservation_id])
 
-  function loadReservation() {
+  async function loadReservation() {
     const abortController = new AbortController();
-    setErrorMessage(null);
-    getReservation(reservation_id, abortController.signal)
-      .then(setFormData)
-      .catch(setErrorMessage);
+    try {
+      const abortController = new AbortController();
+      setErrorMessage(null);
+      let reservation = await getReservation(reservation_id, abortController.signal)
+      reservation.reservation_date = reservation.reservation_date.slice(0, 10)
+      setFormData(reservation)
+    } catch (error) {
+      setErrorMessage(error);
+    }
     return () => abortController.abort();
   }
 
