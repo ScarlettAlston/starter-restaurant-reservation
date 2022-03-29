@@ -60,7 +60,7 @@ const SearchReservation = () => {
         <h5 className="alert alert-danger mx-1">{errorMessage}</h5>
       )}
       <label htmlFor="search_for_reservation" className="mt-2"> <strong>Search For A Reservation</strong></label>
-      <div className="row g-3">
+      <div className="form-group row g-3 ">
         <div className="d-flex col-md-6">
           <input
             value={formData.mobile_number}
@@ -84,7 +84,7 @@ const SearchReservation = () => {
       {(reservations &&
         <div>
           <table className="mb table table-striped">
-            <thead>
+            <thead className="text-center">
               <tr>
                 <th scope="col">Time</th>
                 <th scope="col">Name</th>
@@ -95,7 +95,7 @@ const SearchReservation = () => {
                 <th scope="col"> </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="text-center">
               {reservations.map((reservation) => {
                 return (
                   <tr key={reservation.reservation_id}>
@@ -108,7 +108,7 @@ const SearchReservation = () => {
                     <td data-reservation-id-status={reservation.reservation_id}>{reservation.status}</td>
                     <td>
                       <Link to={`/reservations/${reservation.reservation_id}/edit`}>
-                        <button type="button" className="mx-1 btn btn-outline-secondary">
+                        <button type="button" className="mx-1 my-1 ml-4 btn btn-sm btn-outline-secondary">
                           Edit
                         </button>
                       </Link>
@@ -118,7 +118,7 @@ const SearchReservation = () => {
                         onClick={() => handleCancel(reservation.reservation_id)}
                         data-reservation-id-cancel={reservation.reservation_id}
                         type="button"
-                        className="mx-1 btn btn-danger">
+                        className="mx-1 my-1 ml-4 btn btn-sm btn-danger">
                         Cancel
                       </button>
                     </td>

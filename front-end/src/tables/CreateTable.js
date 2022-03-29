@@ -4,7 +4,7 @@ import { createTable } from '../utils/api';
 import { TableForm } from './TableForm';
 
 
-export const CreateTable = () => {
+const CreateTable = () => {
   const [formData, setFormData] = useState({
     table_name: "",
     capacity: "",
@@ -56,3 +56,5 @@ export const CreateTable = () => {
     </div>
   );
 }
+
+export default CreateTable;
