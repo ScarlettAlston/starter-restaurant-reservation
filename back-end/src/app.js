@@ -12,7 +12,7 @@ const tablesRouter = require("./tables/tables.router")
 
 const app = express();
 
-pp.use(cors({ origin: ORIGIN_HOST }));
+app.use(cors({ origin: ORIGIN_HOST }));
 app.use(express.json());
 
 app.use("/reservations", reservationsRouter);
